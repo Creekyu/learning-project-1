@@ -1,11 +1,11 @@
-# 练手项目（没什么注释可能存在不规范，主要为了练手，技术均采用截止目前最新版本，只写了重要部分以及部分功能，其他重复劳动不想写了）
-
-> 主要技术栈 react18 + react-redux + json-server + antd  <br/>
-> 持久化：react-persist 异步action:react-thunk 路由:react-router-v6 cookie:react-cookies
+# 练手项目
+* 没什么注释可能存在不规范，主要为了练手，技术均采用截止目前最新版本，只写了重要部分以及部分功能，其他重复劳动不想写了
+* 主要技术栈 react18 + react-redux + json-server + antd
+* 持久化：react-persist 异步action:react-thunk 路由:react-router-v6 cookie:react-cookies
 
 # Something
 * 1、关于Router-v6，多页面可在路由表中配置多项，相关路径配置在该页面路由children下，在App中引用routes用于多页面路由，在子组件相应位置放Outlet可在该位置触发对应级别下路由的组件
-* 2、关于redux状态更新 
+* 2、关于redux状态更新
     * 一种方法是在更新或删除后使用setState传一个空值骗一下让组件刷新， 然后通过useEffect内请求函数每次都获取最新数据，但这会导致每次修改都页面刷新。
     * 另一种方法是在ajax请求成功之后，直接修改redux中的状态，而不再请求后端，除非刷新页面，但这种方法比较复杂，对于有多层结构的state来说，改变内层稍微麻烦一些，而且一旦内层改变了，实际也会影响到state内部的值
     * (开始使用的第一种后来改第二种了，第一种写起来方便，但每次刷新，第二种只会刷新相关组件更符合react思想)
