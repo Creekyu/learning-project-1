@@ -1,7 +1,7 @@
 # 练手项目
 * 没什么注释可能存在不规范，主要为了练手，技术均采用截止目前最新版本，只写了重要部分以及部分功能，其他重复劳动不想写了
 * 主要技术栈 react18 + react-redux + json-server + antd
-* 持久化：redux-persist 异步action:redux-thunk 路由:react-router-v6 cookie:react-cookies
+* 脚手架：create-react-app 持久化：redux-persist 异步action：redux-thunk 路由：react-router-v6 cookie：react-cookies
 
 # Something
 * 1、关于Router-v6，多页面可在路由表中配置多项，相关路径配置在该页面路由children下，在App中引用routes用于多页面路由，在子组件相应位置放Outlet可在该位置触发对应级别下路由的组件
