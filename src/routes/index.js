@@ -1,66 +1,68 @@
+import React, {Suspense,lazy} from "react";
+
 import AuthRoute from "../components/AuthRoute";
-import Home from '../pages/MainPage/Home';
-import RoleList from "../pages/MainPage/Role/RoleList";
-import CharacterList from "../pages/MainPage/Role/CharacterList";
-import Users from "../pages/MainPage/Users";
-import Login from "../pages/Login";
-import MainPage from "../pages/MainPage";
+
+
 
 const routes = [
     {
         path:'/login',
-        element: <AuthRoute path="/login"><Login/></AuthRoute>
-    },
-    {
-        path:'/logout',
-        element: <Login/>
+        element: lazy(()=>import('../pages/Login'))
     },
     {
         path: '/',
-        element: <AuthRoute path="/"><MainPage/></AuthRoute>,
+        element: lazy(()=>import('../pages/MainPage')),
         children: [
             {
                 path: 'home',
-                element: <Home/>
+                element: lazy(()=>import('../pages/MainPage/Home'))
             },
             {
                 path: 'users',
-                element: null,
+                element: lazy(()=>import('../pages/MainPage/Home')),
                 children:[
                     {
                         path:'user_list',
-                        element: <AuthRoute path="/users/user_list"><Users/></AuthRoute>
+                        element: lazy(()=>import('../pages/MainPage/Users')),
                     }
                 ]
             },
             {
                 path: 'role',
-                element: null,
+                element: lazy(()=>import('../pages/MainPage/Role/RoleList')),
                 children:[
                     {
                         path:'role_list',
-                        element:<AuthRoute path="/role/role_list"><RoleList/></AuthRoute>
+                        element:lazy(()=>import('../pages/MainPage/Role/RoleList'))
                     },
                     {
                         path:'character_list',
-                        element: <AuthRoute path="/role/character_list"><CharacterList/></AuthRoute>
+                        element: lazy(()=>import('../pages/MainPage/Role/CharacterList'))
                     }
                 ]
-            },
-            {
-                path: 'news',
-                element: null
-            },
-            {
-                path: 'audit',
-                element: null
-            },
-            {
-                path: 'publish',
-                element: null
-            },
+            }
         ]
     },
 ];
 
-export default routes
+// 对路由表元素进行批量操作
+const syncRouter = (table) => {
+    let mRouteTable = []
+    table.forEach(route => {
+        mRouteTable.push({
+            path: route.path,
+            element: (
+                <Suspense fallback={ <div>路由加载ing...</div> }>
+                    <AuthRoute>
+                        <route.element/>
+                    </AuthRoute>
+                </Suspense>
+            ),
+            children: route.children && syncRouter(route.children)
+        })
+
+    })
+    return mRouteTable
+}
+
+export default syncRouter(routes);

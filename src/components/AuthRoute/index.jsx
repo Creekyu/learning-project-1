@@ -23,11 +23,11 @@ const getCurrentRoute = (children, path, user,isLogout=undefined) => {
 
 const AuthRoute = (props) => {
     const {
-        children,
-        path
+        children
     } = props;
     const user = loadUser('currentUser');
     const location = useLocation();
+    const path = location.pathname;
     let isLogout = location.state ? location.state.isLogout : false;
     return (
         <>
